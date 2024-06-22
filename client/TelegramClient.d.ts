@@ -733,25 +733,6 @@ export declare class TelegramClient extends TelegramBaseClient {
      * @return
      */
     getParticipants(entity: EntityLike, params?: chatMethods.IterParticipantsParams): Promise<import("../Helpers").TotalList<Api.User>>;
-    /**
-     * Kicks a user from a chat.
-     *
-     * Kicking yourself (`'me'`) will result in leaving the chat.
-     *
-     * @note
-     * Attempting to kick someone who was banned will remove their
-     * restrictions (and thus unbanning them), since kicking is just
-     * ban + unban.
-     *
-     * @example
-     * // Kick some user from some chat, and deleting the service message
-     * const msg = await client.kickParticipant(chat, user);
-     * await msg.delete();
-     *
-     * // Leaving chat
-     * await client.kickParticipant(chat, 'me');
-     */
-    kickParticipant(entity: EntityLike, participant: EntityLike): Promise<Api.TypeMessage | Map<number, Api.Message> | (Api.Message | undefined)[] | undefined>;
     /** TODO */
     on(event: any): (f: (event: any) => void) => (event: any) => void;
     /**
@@ -941,11 +922,11 @@ export declare class TelegramClient extends TelegramBaseClient {
      * @example
      * ```ts
      * const me = await client.getEntity("me");
-     * console.log("My name is", utils.getDisplayName(me));
+     * console.log("My name is",utils.getDisplayName(me));
      *
      * const chat = await client.getInputEntity("username");
-     * for await (const message of client.iterMessages(chat)) {
-     *     console.log("Message text is", message.text);
+     * for await (const message of client.iterMessages(chat){
+     *     console.log("Message text is",message.text);
      * }
      *
      * // Note that you could have used the username directly, but it's

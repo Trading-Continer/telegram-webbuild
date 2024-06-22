@@ -48,6 +48,7 @@ const clientParamsDefault = {
 };
 class TelegramBaseClient {
     constructor(session, apiId, apiHash, clientParams) {
+        var _a;
         /** The current gramJS version. */
         this.__version__ = __1.version;
         /** @hidden */
@@ -81,7 +82,6 @@ class TelegramBaseClient {
         this._requestRetries = clientParams.requestRetries;
         this._downloadRetries = clientParams.downloadRetries;
         this._connectionRetries = clientParams.connectionRetries;
-        this._reconnectRetries = clientParams.reconnectRetries;
         this._retryDelay = clientParams.retryDelay || 0;
         this._timeout = clientParams.timeout;
         this._autoReconnect = clientParams.autoReconnect;
@@ -94,7 +94,7 @@ class TelegramBaseClient {
         }
         this._connection = clientParams.connection;
         let initProxy;
-        if (this._proxy && "MTProxy" in this._proxy) {
+        if ((_a = this._proxy) === null || _a === void 0 ? void 0 : _a.MTProxy) {
             this._connection = TCPMTProxy_1.ConnectionTCPMTProxyAbridged;
             initProxy = new tl_1.Api.InputClientProxy({
                 address: this._proxy.ip,
@@ -295,14 +295,7 @@ class TelegramBaseClient {
         }
         this._exportedSenderReleaseTimeouts.set(dcId, setTimeout(() => {
             this._exportedSenderReleaseTimeouts.delete(dcId);
-            if (sender._pendingState.values().length) {
-                console.log("sender already has some hanging states. reconnecting");
-                sender._reconnect();
-                this._borrowExportedSender(dcId, false, sender);
-            }
-            else {
-                sender.disconnect();
-            }
+            sender.disconnect();
         }, EXPORTED_SENDER_RELEASE_TIMEOUT));
         return sender;
     }
@@ -320,8 +313,6 @@ class TelegramBaseClient {
             onConnectionBreak: this._cleanupExportedSender.bind(this),
             client: this,
             securityChecks: this._securityChecks,
-            _exportedSenderPromises: this._exportedSenderPromises,
-            reconnectRetries: this._reconnectRetries,
         });
     }
     /** @hidden */

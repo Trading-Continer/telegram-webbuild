@@ -802,27 +802,6 @@ class TelegramClient extends telegramBaseClient_1.TelegramBaseClient {
     getParticipants(entity, params = {}) {
         return chatMethods.getParticipants(this, entity, params);
     }
-    /**
-     * Kicks a user from a chat.
-     *
-     * Kicking yourself (`'me'`) will result in leaving the chat.
-     *
-     * @note
-     * Attempting to kick someone who was banned will remove their
-     * restrictions (and thus unbanning them), since kicking is just
-     * ban + unban.
-     *
-     * @example
-     * // Kick some user from some chat, and deleting the service message
-     * const msg = await client.kickParticipant(chat, user);
-     * await msg.delete();
-     *
-     * // Leaving chat
-     * await client.kickParticipant(chat, 'me');
-     */
-    kickParticipant(entity, participant) {
-        return chatMethods.kickParticipant(this, entity, participant);
-    }
     //endregion
     //region updates
     /** TODO */
@@ -1068,8 +1047,6 @@ class TelegramClient extends telegramBaseClient_1.TelegramBaseClient {
                 client: this,
                 securityChecks: this._securityChecks,
                 autoReconnectCallback: this._handleReconnect.bind(this),
-                _exportedSenderPromises: this._exportedSenderPromises,
-                reconnectRetries: this._reconnectRetries,
             });
         }
         const connection = new this._connection({

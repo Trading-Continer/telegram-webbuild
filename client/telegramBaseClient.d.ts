@@ -38,16 +38,11 @@ export interface TelegramClientParams {
      */
     requestRetries?: number;
     /**
-     * How many times the connection should retry, either on the initial connection or when Telegram disconnects us.<br/>
+     * How many times the reconnection should retry, either on the initial connection or when Telegram disconnects us.<br/>
      * May be set to a negative or undefined value for infinite retries, but this is not recommended, since the program can get stuck in an infinite loop.<br/>
      * defaults to 5
      */
     connectionRetries?: number;
-    /**
-     * How many times to reconnect before giving up. This happens after the initial connection is finished<br/>
-     * defaults to infinity
-     */
-    reconnectRetries?: number;
     /**
      * Experimental proxy to be used for the connection. (only supports MTProxies)
      */
@@ -132,8 +127,6 @@ export declare abstract class TelegramBaseClient {
     /** @hidden */
     _connectionRetries: number;
     /** @hidden */
-    _reconnectRetries: number;
-    /** @hidden */
     _retryDelay: number;
     /** @hidden */
     _timeout: number;
@@ -170,7 +163,7 @@ export declare abstract class TelegramBaseClient {
     /** @hidden */
     _ALBUMS: Map<string, [Timeout, Api.TypeUpdate[]]>;
     /** @hidden */
-    _exportedSenderPromises: Map<number, Promise<MTProtoSender>>;
+    private _exportedSenderPromises;
     /** @hidden */
     private _exportedSenderReleaseTimeouts;
     /** @hidden */

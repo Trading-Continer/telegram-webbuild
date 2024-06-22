@@ -1,10 +1,10 @@
 import { Buffer } from "buffer/";
+import type { Entity, EntityLike, MessageIDLike } from "./define";
+import { Api } from "./tl";
 import bigInt from "big-integer";
+import { EntityCache } from "./entityCache";
 import type { ParseInterface } from "./client/messageParse";
 import { CustomFile } from "./client/uploads";
-import type { Entity, EntityLike, MessageIDLike } from "./define";
-import { EntityCache } from "./entityCache";
-import { Api } from "./tl";
 export declare function getFileInfo(fileLocation: Api.Message | Api.MessageMediaDocument | Api.MessageMediaPhoto | Api.TypeInputFileLocation): {
     dcId?: number;
     location: Api.TypeInputFileLocation;

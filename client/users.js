@@ -28,9 +28,6 @@ async function invoke(client, request, dcId, otherSender) {
     if (sender == undefined) {
         throw new Error("Cannot send requests while disconnected. You need to call .connect()");
     }
-    if (sender.userDisconnected) {
-        throw new Error("Cannot send requests while disconnected. Please reconnect.");
-    }
     await client._connectedDeferred.promise;
     await request.resolve(client, __1.utils);
     client._lastRequest = new Date().getTime();
@@ -109,9 +106,7 @@ async function getMe(client, inputPeer) {
     if (!client._selfInputPeer) {
         client._selfInputPeer = __1.utils.getInputPeer(me, false);
     }
-    return inputPeer
-        ? client._selfInputPeer
-        : me;
+    return inputPeer ? client._selfInputPeer : me;
 }
 exports.getMe = getMe;
 /** @hidden */

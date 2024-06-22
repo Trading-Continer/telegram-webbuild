@@ -2,21 +2,16 @@ import { Buffer } from "buffer/";
 import { ObfuscatedConnection } from "./Connection";
 import { AbridgedPacketCodec } from "./TCPAbridged";
 import { Logger, PromisedNetSockets, PromisedWebSockets } from "../../extensions";
-interface BasicProxyInterface {
+export interface ProxyInterface {
+    socksType?: 4 | 5;
     ip: string;
     port: number;
+    secret?: string;
+    MTProxy?: boolean;
     timeout?: number;
     username?: string;
     password?: string;
 }
-export declare type MTProxyType = BasicProxyInterface & {
-    secret: string;
-    MTProxy: true;
-};
-export declare type SocksProxyType = BasicProxyInterface & {
-    socksType: 4 | 5;
-};
-export declare type ProxyInterface = MTProxyType | SocksProxyType;
 declare class MTProxyIO {
     header?: Buffer;
     private connection;
